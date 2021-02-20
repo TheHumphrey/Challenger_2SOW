@@ -2,6 +2,9 @@ import React, { ReactElement } from "react";
 import ReactDOM from "react-dom";
 
 import { ThemeProvider } from "styled-components";
+import { Provider } from "react-redux";
+
+import { store } from "./store";
 
 import Routes from "./routes";
 
@@ -12,8 +15,10 @@ import "semantic-ui-css/semantic.min.css";
 
 const App = (): ReactElement => (
   <ThemeProvider theme={light}>
-    <GlobalStyle />
-    <Routes />
+    <Provider store={store}>
+      <GlobalStyle />
+      <Routes />
+    </Provider>
   </ThemeProvider>
 );
 
