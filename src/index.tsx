@@ -3,15 +3,15 @@ import ReactDOM from "react-dom";
 
 import { ThemeProvider } from "styled-components";
 
+import Routes from "./routes";
+
 import GlobalStyle from "./styles/global";
 import light from "./styles/themes/light";
 
 const App = (): ReactElement => (
   <ThemeProvider theme={light}>
     <GlobalStyle />
-    <div>
-      <h1>Hello World</h1>
-    </div>
+    <Routes />
   </ThemeProvider>
 );
 
