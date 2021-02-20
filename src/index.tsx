@@ -8,6 +8,8 @@ import Routes from "./routes";
 import GlobalStyle from "./styles/global";
 import light from "./styles/themes/light";
 
+import "semantic-ui-css/semantic.min.css";
+
 const App = (): ReactElement => (
   <ThemeProvider theme={light}>
     <GlobalStyle />
