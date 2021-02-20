@@ -8,6 +8,7 @@ const ListItem = ({ item }: any): ReactElement => {
       <Image avatar src={item.image} />
       <List.Content>
         <List.Header>{item.name}</List.Header>
+        <List.Description>email@example.com</List.Description>
       </List.Content>
     </List.Item>
   );
