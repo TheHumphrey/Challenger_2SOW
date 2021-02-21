@@ -1,10 +1,10 @@
 import React, { ReactElement } from "react";
 
-import { ListUsers } from "../../components";
+import { Table } from "../../components";
 
 const Home = (): ReactElement => (
   <div>
-    <ListUsers />
+    <Table />
   </div>
 );
 

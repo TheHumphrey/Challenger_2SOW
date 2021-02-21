@@ -1,4 +1,3 @@
 import LoginComponent from "./LoginComponents";
-import ListUsers from "./ListUsers";
-
-export { LoginComponent, ListUsers };
+import Table from "./Table";
+export { LoginComponent, Table };
