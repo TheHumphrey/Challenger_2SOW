@@ -1,6 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { ReactElement, useEffect, useState } from "react";
 
 import axios from "axios";
+
+import api from "../../services/api";
 
 import { useHistory, Link } from "react-router-dom";
 
@@ -13,6 +16,7 @@ import {
   Message,
   Segment,
 } from "semantic-ui-react";
+import { User } from "../../types/User";
 
 const SignUp = (): ReactElement => {
   const history = useHistory();
@@ -29,39 +33,20 @@ const SignUp = (): ReactElement => {
   const [cpf, setCpf] = useState<string>("");
   const [cep, setCep] = useState<string>("");
   const [street, setStreet] = useState<string>("");
-  const [number, setNumber] = useState<number>();
+  const [number, setNumber] = useState<number>(0);
   const [district, setDistrict] = useState<string>("");
   const [city, setCity] = useState<string>("");
 
   useEffect(() => {
-    validateAll(email, password, confirmPassword);
-  }, [
-    email,
-    password,
-    confirmPassword,
-    name,
-    cpf,
-    cep,
-    street,
-    number,
-    district,
-    city,
-  ]);
+    validateAll();
+  }, [email, password, confirmPassword, name, cpf, cep]);
 
-  const validateAll = (
-    email?: string,
-    password?: string,
-    confirmPassword?: string,
-    cpf?: string,
-    cep?: string,
-    street?: string,
-    number?: string,
-    district?: string,
-    city?: string
-  ) => {
+  const validateAll = (): void => {
     email && setIsEmail(validateEmail());
     password && setIsPassword(validatePassword());
     confirmPassword && setIsConfirmPassword(validateConfirmPassword());
+    cpf && setIsCpf(validateCpf());
+    cep && setIsCep(validateCep());
   };
 
   const validateConfirmPassword = () => {
@@ -77,11 +62,38 @@ const SignUp = (): ReactElement => {
     return password.length < 4 ? true : false;
   };
 
-  const handleSubmit = () => {
-    !isEmail && !isPassword && history.push("/login");
+  const validateCpf = (): boolean => {
+    const re = /^\d{1,3}.\d{3}.\d{3}-\d{2}/;
+    return !re.test(String(cpf).toLowerCase());
   };
 
-  const checkCep = (cep: string) => {
+  const validateCep = (): boolean => {
+    const re = /^\d{5}\-\d{3}/;
+    return !re.test(String(cep).toLowerCase());
+  };
+
+  const handleSubmit = (): void => {
+    const data: User = {
+      email: email,
+      nome: name,
+      cpf: cpf,
+      endereco: {
+        bairro: district,
+        cep: cep,
+        cidade: city,
+        numero: Number(number) || 0,
+        rua: street,
+      },
+    };
+    if (!isEmail && !isPassword && !isConfirmPassword && !isCep && !isCpf) {
+      api.post("/usuarios", data);
+      history.push("/login");
+    } else {
+      console.warn("fail");
+    }
+  };
+
+  const checkCep = (cep: string): void => {
     const cepApi = axios.create({
       baseURL: "https://viacep.com.br/ws",
     });
@@ -100,16 +112,14 @@ const SignUp = (): ReactElement => {
       });
   };
 
-  const maskCep = (e: string) => {
-    console.log(e);
+  const maskCep = (e: string): void => {
     if (e.length === 5) {
       e += "-";
       setCep(e);
     }
   };
 
-  const maskCpf = (e: string) => {
-    console.log(e);
+  const maskCpf = (e: string): void => {
     if (e.length === 3 || e.length === 7) {
       e += ".";
       setCpf(e);
@@ -226,9 +236,8 @@ const SignUp = (): ReactElement => {
               icon="building"
               iconPosition="left"
               placeholder="Number"
-              value={number}
               control={Input}
-              type="text"
+              type="number"
               onChange={(e: any) => setNumber(e.target.value)}
               required
             />

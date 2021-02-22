@@ -3,10 +3,11 @@ export type User = {
   cpf: string;
   email: string;
   endereco: {
-    cep: number;
+    cep: string;
     rua: string;
     numero: number;
     bairro: string;
     cidade: string;
   };
+  id?: number;
 };

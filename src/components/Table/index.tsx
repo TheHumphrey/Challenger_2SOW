@@ -8,15 +8,16 @@ import api from "../../services/api";
 
 import Body from "./Body";
 import { AxiosResponse } from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUsers } from "../../store/reducers/users/action";
+import { RootState } from "../../store/reducers/rootReducer";
 
 const test: User = {
   nome: "fernando",
   cpf: "123123",
   email: "fernando@gmail.com",
   endereco: {
-    cep: 1111111,
+    cep: "1111111",
     rua: "aa",
     numero: 11,
     bairro: "aaa",
@@ -25,26 +26,10 @@ const test: User = {
 };
 
 const TableUser = () => {
+  const users = useSelector((state: RootState) => state.users);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // api
-    //   .post("/usuarios", {
-    //     nome: "fernando",
-    //     cpf: "123123",
-    //     email: "fernando@gmail.com",
-    //     endereco: {
-    //       cep: 1111111,
-    //       rua: "aa",
-    //       numero: 11,
-    //       bairro: "aaa",
-    //       cidade: "aaa",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //   });
-
     api
       .get("/usuarios")
       .then((res: AxiosResponse<User[]>) => {
@@ -55,6 +40,7 @@ const TableUser = () => {
         console.warn(err);
       });
   }, []);
+
   return (
     <Table singleLine>
       <Table.Header>
@@ -68,7 +54,7 @@ const TableUser = () => {
       </Table.Header>
 
       <Table.Body>
-        <Body user={test} />
+        {users && users.map((user) => <Body user={user} />)}
       </Table.Body>
     </Table>
   );
