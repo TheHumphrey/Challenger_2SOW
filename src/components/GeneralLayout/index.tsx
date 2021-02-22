@@ -12,7 +12,6 @@ const FixedMenuLayout = ({ children }: Props) => (
         <Menu.Item as="a" header>
           Project Name
         </Menu.Item>
-        <Menu.Item as="a">Home</Menu.Item>
       </Container>
     </Menu>
 
