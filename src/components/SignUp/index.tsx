@@ -1,4 +1,7 @@
 import React, { ReactElement, useEffect, useState } from "react";
+
+import axios from "axios";
+
 import { useHistory, Link } from "react-router-dom";
 
 import {
@@ -16,22 +19,17 @@ const SignUp = (): ReactElement => {
   const [isEmail, setIsEmail] = useState<boolean>(false);
   const [isPassword, setIsPassword] = useState<boolean>(false);
   const [isConfirmPassword, setIsConfirmPassword] = useState<boolean>(false);
-  const [isName, setIsName] = useState<boolean>(false);
   const [isCpf, setIsCpf] = useState<boolean>(false);
   const [isCep, setIsCep] = useState<boolean>(false);
-  const [isStreet, setIsStreet] = useState<boolean>(false);
-  const [isNumber, setIsNumber] = useState<boolean>(false);
-  const [isDistrict, setIsDistrict] = useState<boolean>(false);
-  const [isCity, setIsCity] = useState<boolean>(false);
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [name, setName] = useState<string>("");
-  const [cpf, setCpf] = useState<number>(0);
-  const [cep, setCep] = useState<number>(0);
+  const [cpf, setCpf] = useState<string>("");
+  const [cep, setCep] = useState<string>("");
   const [street, setStreet] = useState<string>("");
-  const [number, setNumber] = useState<number>(0);
+  const [number, setNumber] = useState<number>();
   const [district, setDistrict] = useState<string>("");
   const [city, setCity] = useState<string>("");
 
@@ -54,7 +52,6 @@ const SignUp = (): ReactElement => {
     email?: string,
     password?: string,
     confirmPassword?: string,
-    name?: string,
     cpf?: string,
     cep?: string,
     street?: string,
@@ -82,6 +79,44 @@ const SignUp = (): ReactElement => {
 
   const handleSubmit = () => {
     !isEmail && !isPassword && history.push("/login");
+  };
+
+  const checkCep = (cep: string) => {
+    const cepApi = axios.create({
+      baseURL: "https://viacep.com.br/ws",
+    });
+
+    cepApi
+      .get(`${cep.replace("-", "")}/json/`)
+      .then((res) => {
+        const { logradouro, bairro, localidade } = res.data;
+
+        setStreet(logradouro);
+        setDistrict(bairro);
+        setCity(localidade);
+      })
+      .catch(() => {
+        setIsCep(true);
+      });
+  };
+
+  const maskCep = (e: string) => {
+    console.log(e);
+    if (e.length === 5) {
+      e += "-";
+      setCep(e);
+    }
+  };
+
+  const maskCpf = (e: string) => {
+    console.log(e);
+    if (e.length === 3 || e.length === 7) {
+      e += ".";
+      setCpf(e);
+    } else if (e.length === 11) {
+      e += "-";
+      setCpf(e);
+    }
   };
 
   return (
@@ -137,7 +172,6 @@ const SignUp = (): ReactElement => {
               iconPosition="left"
               placeholder="Name"
               control={Input}
-              error={isName}
               type="text"
               onChange={(e: any) => setName(e.target.value)}
               required
@@ -150,7 +184,10 @@ const SignUp = (): ReactElement => {
               placeholder="CPF"
               control={Input}
               error={isCpf}
-              type="number"
+              maxLength={14}
+              type="text"
+              value={cpf}
+              onKeyUp={(e: any) => maskCpf(e.target.value)}
               onChange={(e: any) => setCpf(e.target.value)}
               required
             />
@@ -161,9 +198,13 @@ const SignUp = (): ReactElement => {
               className="cep-mask"
               iconPosition="left"
               placeholder="Cep"
+              maxLength={9}
+              onKeyUp={(e: any) => maskCep(e.target.value)}
+              value={cep}
               control={Input}
               error={isCep}
-              type="number"
+              type="text"
+              onBlur={(e: any) => checkCep(e.target.value)}
               onChange={(e: any) => setCep(e.target.value)}
               required
             />
@@ -173,8 +214,8 @@ const SignUp = (): ReactElement => {
               icon="building"
               iconPosition="left"
               placeholder="Street"
+              value={street}
               control={Input}
-              error={isStreet}
               type="text"
               onChange={(e: any) => setStreet(e.target.value)}
               required
@@ -185,8 +226,8 @@ const SignUp = (): ReactElement => {
               icon="building"
               iconPosition="left"
               placeholder="Number"
+              value={number}
               control={Input}
-              error={isNumber}
               type="text"
               onChange={(e: any) => setNumber(e.target.value)}
               required
@@ -197,8 +238,8 @@ const SignUp = (): ReactElement => {
               icon="warehouse"
               iconPosition="left"
               placeholder="District"
+              value={district}
               control={Input}
-              error={isDistrict}
               type="text"
               onChange={(e: any) => setDistrict(e.target.value)}
               required
@@ -209,8 +250,8 @@ const SignUp = (): ReactElement => {
               icon="globe"
               iconPosition="left"
               placeholder="City"
+              value={city}
               control={Input}
-              error={isCity}
               type="text"
               onChange={(e: any) => setCity(e.target.value)}
               required

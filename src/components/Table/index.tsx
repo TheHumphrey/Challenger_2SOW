@@ -28,22 +28,22 @@ const TableUser = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    api
-      .post("/usuarios", {
-        nome: "fernando",
-        cpf: "123123",
-        email: "fernando@gmail.com",
-        endereco: {
-          cep: 1111111,
-          rua: "aa",
-          numero: 11,
-          bairro: "aaa",
-          cidade: "aaa",
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      });
+    // api
+    //   .post("/usuarios", {
+    //     nome: "fernando",
+    //     cpf: "123123",
+    //     email: "fernando@gmail.com",
+    //     endereco: {
+    //       cep: 1111111,
+    //       rua: "aa",
+    //       numero: 11,
+    //       bairro: "aaa",
+    //       cidade: "aaa",
+    //     },
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //   });
 
     api
       .get("/usuarios")
