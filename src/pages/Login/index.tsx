@@ -1,7 +1,11 @@
 import React, { ReactElement } from "react";
 
-import { LoginComponent } from "../../components";
+import { LoginComponent, LoginLayout } from "../../components";
 
-const Login = (): ReactElement => <LoginComponent />;
+const Login = (): ReactElement => (
+  <LoginLayout>
+    <LoginComponent />
+  </LoginLayout>
+);
 
 export default Login;

@@ -1,8 +1,18 @@
 import React, { ReactElement, useState } from "react";
+import { useHistory, Link } from "react-router-dom";
 
-import { Button, Form, Input } from "semantic-ui-react";
+import {
+  Button,
+  Form,
+  Grid,
+  Header,
+  Input,
+  Message,
+  Segment,
+} from "semantic-ui-react";
 
 const LoginComponent = (): ReactElement => {
+  const history = useHistory();
   const [isEmail, setIsEmail] = useState<boolean>(false);
   const [isPassword, setIsPassword] = useState<boolean>(false);
 
@@ -15,35 +25,59 @@ const LoginComponent = (): ReactElement => {
     password.length < 4 ? setIsPassword(true) : setIsPassword(false);
   };
 
+  const handleSubmit = () => {
+    !isEmail && !isPassword && history.push("/");
+  };
+
   return (
-    <div>
-      <Form onSubmit={() => console.log("funcionou")}>
-        <Form.Field
-          id="form-input-control-error-email"
-          control={Input}
-          label="Email"
-          error={isEmail}
-          type="email"
-          onChange={(e: any) => validateEmail(e.target.value)}
-          required
-        />
-        <Form.Field
-          id="form-input-control-error-email"
-          control={Input}
-          label="Senha"
-          error={isPassword}
-          type="password"
-          minLength={4}
-          onChange={(e: any) => validatePassword(e.target.value)}
-          required
-        />
-        <Form.Field
-          id="form-button-control-public"
-          control={Button}
-          content="Enviar"
-        />
-      </Form>
-    </div>
+    <Grid textAlign="center" style={{ height: "98vh" }} verticalAlign="middle">
+      <Grid.Column style={{ maxWidth: 450 }}>
+        <Header as="h2" color="teal" textAlign="center">
+          Log-in to your account
+        </Header>
+        <Form size="large" onSubmit={() => handleSubmit()}>
+          <Segment stacked>
+            <Form.Field
+              id="form-input-control-error-email"
+              fluid
+              icon="user"
+              iconPosition="left"
+              placeholder="E-mail address"
+              control={Input}
+              error={isEmail}
+              type="email"
+              onChange={(e: any) => validateEmail(e.target.value)}
+              required
+            />
+            <Form.Field
+              id="form-input-control-error-password"
+              fluid
+              icon="lock"
+              iconPosition="left"
+              placeholder="Password"
+              control={Input}
+              error={isPassword}
+              type="password"
+              minLength={4}
+              onChange={(e: any) => validatePassword(e.target.value)}
+              required
+            />
+
+            <Form.Field
+              id="form-button-control-public"
+              color="teal"
+              fluid
+              size="large"
+              control={Button}
+              content="Login"
+            />
+          </Segment>
+        </Form>
+        <Message>
+          New to us? <Link to="/signup">Sign Up</Link>
+        </Message>
+      </Grid.Column>
+    </Grid>
   );
 };
 

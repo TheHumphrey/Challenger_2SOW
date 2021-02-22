@@ -1,10 +1,12 @@
 import React, { ReactElement } from "react";
 
-import { Table } from "../../components";
+import { Table, GeneralLayout } from "../../components";
 
 const Home = (): ReactElement => (
   <div>
-    <Table />
+    <GeneralLayout>
+      <Table />
+    </GeneralLayout>
   </div>
 );
 
