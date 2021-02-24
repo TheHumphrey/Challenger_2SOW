@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 
 import { Table, Grid, Button } from "semantic-ui-react";
+
 import { User } from "../../types/User";
 
 import api from "../../services/api";

@@ -1,5 +1,7 @@
 import React from "react";
-import { Button, Header, Image, Modal } from "semantic-ui-react";
+import { Button, Modal } from "semantic-ui-react";
+
+import { toast } from "react-semantic-toasts";
 
 import { UserFrom } from "../../";
 
@@ -8,6 +10,15 @@ const NewUserModal = () => {
 
   const modalFuction = () => {
     setOpen(false);
+
+    toast({
+      type: "success",
+      icon: "envelope",
+      title: "User Created",
+      description: "User create with success!",
+      animation: "drop",
+      time: 5000,
+    });
   };
 
   return (

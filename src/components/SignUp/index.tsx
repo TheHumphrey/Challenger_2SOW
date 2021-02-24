@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { ReactElement, useEffect, useState } from "react";
 
+import { toast } from "react-semantic-toasts";
+
 import { useHistory, Link } from "react-router-dom";
 
 import {
@@ -48,6 +50,14 @@ const SignUp = (): ReactElement => {
   };
 
   const handleSubmit = (): void => {
+    toast({
+      type: "success",
+      icon: "envelope",
+      title: "Registered",
+      description: "Success registered",
+      animation: "drop",
+      time: 5000,
+    });
     history.push("/login");
   };
 

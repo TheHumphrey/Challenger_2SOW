@@ -19,7 +19,7 @@ const FixedMenuLayout = ({ children }: Props) => (
       </Container>
     </Menu>
 
-    <Container text style={{ height: "95.2vh" }}>
+    <Container text style={{ height: "96.6vh" }}>
       {children}
     </Container>
 
