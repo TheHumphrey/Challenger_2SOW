@@ -1,4 +1,5 @@
 import React, { ReactElement, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
 
 import {
@@ -10,8 +11,10 @@ import {
   Message,
   Segment,
 } from "semantic-ui-react";
+import { setAuth } from "../../store/reducers/isAuth/action";
 
 const LoginComponent = (): ReactElement => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [isEmail, setIsEmail] = useState<boolean>(false);
   const [isPassword, setIsPassword] = useState<boolean>(false);
@@ -25,8 +28,8 @@ const LoginComponent = (): ReactElement => {
     password.length < 4 ? setIsPassword(true) : setIsPassword(false);
   };
 
-  const createToken = () => {
-    debugger;
+  const auth = () => {
+    dispatch(setAuth(true));
     localStorage.setItem(
       "auth",
       JSON.stringify({
@@ -37,7 +40,7 @@ const LoginComponent = (): ReactElement => {
   };
 
   const handleSubmit = () => {
-    !isEmail && !isPassword && createToken() && history.push("/");
+    !isEmail && !isPassword && auth() && history.push("/");
   };
 
   return (

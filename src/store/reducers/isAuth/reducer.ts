@@ -1,6 +1,6 @@
 import { AuthActionType } from "./types";
 
-const isAuth = (state: boolean = true, action: AuthActionType): boolean => {
+const isAuth = (state: boolean = false, action: AuthActionType): boolean => {
   switch (action.type) {
     case "SET_AUTH":
       return (state = action.payload);
