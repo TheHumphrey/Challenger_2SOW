@@ -72,6 +72,15 @@ const SignUp = (): ReactElement => {
     return !re.test(String(cep).toLowerCase());
   };
 
+  const validateTypeNumber = (value: string) => {
+    const re = /\D/g;
+    if (!re.test(value.toLowerCase())) {
+      setNumber(Number(value));
+    } else {
+      setNumber(number);
+    }
+  };
+
   const handleSubmit = (): void => {
     const data: User = {
       email: email,
@@ -159,7 +168,9 @@ const SignUp = (): ReactElement => {
               error={isPassword}
               type="password"
               minLength={4}
-              onChange={(e: any) => setPassword(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setPassword(e.target.value)
+              }
               required
             />
             <Form.Field
@@ -172,7 +183,9 @@ const SignUp = (): ReactElement => {
               error={isConfirmPassword}
               type="password"
               minLength={4}
-              onChange={(e: any) => setConfirmPassword(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setConfirmPassword(e.target.value)
+              }
               required
             />
             <Form.Field
@@ -183,7 +196,9 @@ const SignUp = (): ReactElement => {
               placeholder="Name"
               control={Input}
               type="text"
-              onChange={(e: any) => setName(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setName(e.target.value)
+              }
               required
             />
             <Form.Field
@@ -197,8 +212,12 @@ const SignUp = (): ReactElement => {
               maxLength={14}
               type="text"
               value={cpf}
-              onKeyUp={(e: any) => maskCpf(e.target.value)}
-              onChange={(e: any) => setCpf(e.target.value)}
+              onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
+                maskCpf(e.target.value)
+              }
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setCpf(e.target.value)
+              }
               required
             />
             <Form.Field
@@ -214,8 +233,12 @@ const SignUp = (): ReactElement => {
               control={Input}
               error={isCep}
               type="text"
-              onBlur={(e: any) => checkCep(e.target.value)}
-              onChange={(e: any) => setCep(e.target.value)}
+              onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+                checkCep(e.target.value)
+              }
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setCep(e.target.value)
+              }
               required
             />
             <Form.Field
@@ -227,7 +250,9 @@ const SignUp = (): ReactElement => {
               value={street}
               control={Input}
               type="text"
-              onChange={(e: any) => setStreet(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setStreet(e.target.value)
+              }
               required
             />
             <Form.Field
@@ -237,8 +262,11 @@ const SignUp = (): ReactElement => {
               iconPosition="left"
               placeholder="Number"
               control={Input}
-              type="number"
-              onChange={(e: any) => setNumber(e.target.value)}
+              type="text"
+              value={number}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                validateTypeNumber(e.target.value)
+              }
               required
             />
             <Form.Field
@@ -250,7 +278,9 @@ const SignUp = (): ReactElement => {
               value={district}
               control={Input}
               type="text"
-              onChange={(e: any) => setDistrict(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setDistrict(e.target.value)
+              }
               required
             />
             <Form.Field
@@ -262,7 +292,9 @@ const SignUp = (): ReactElement => {
               value={city}
               control={Input}
               type="text"
-              onChange={(e: any) => setCity(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setCity(e.target.value)
+              }
               required
             />
 
