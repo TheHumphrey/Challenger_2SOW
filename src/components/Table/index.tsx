@@ -7,23 +7,11 @@ import { User } from "../../types/User";
 import api from "../../services/api";
 
 import Body from "./Body";
+import { NewUserModal } from "../";
 import { AxiosResponse } from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setUsers } from "../../store/reducers/users/action";
 import { RootState } from "../../store/reducers/rootReducer";
-
-const test: User = {
-  nome: "fernando",
-  cpf: "123123",
-  email: "fernando@gmail.com",
-  endereco: {
-    cep: "1111111",
-    rua: "aa",
-    numero: 11,
-    bairro: "aaa",
-    cidade: "aaa",
-  },
-};
 
 const TableUser = () => {
   const users = useSelector((state: RootState) => state.users);
@@ -44,7 +32,7 @@ const TableUser = () => {
   return (
     <Grid textAlign="center" style={{ paddingTop: "50px" }} verticalAlign="top">
       <Grid.Column>
-        <Button color="green">Add New User</Button>
+        <NewUserModal />
         <Table singleLine>
           <Table.Header>
             <Table.Row>

@@ -26,13 +26,14 @@ const LoginComponent = (): ReactElement => {
   };
 
   const createToken = () => {
+    debugger;
     localStorage.setItem(
       "auth",
       JSON.stringify({
         token: "Ola Eu Sou Um Token :)",
-        refreshToken: "Ola eu sou um refreshToken :)",
       })
     );
+    return true;
   };
 
   const handleSubmit = () => {

@@ -20,7 +20,7 @@ const LoginLayout = ({ children }: Props): ReactElement => {
           <Menu.Item as="a" header>
             Project Name
           </Menu.Item>
-          <Menu.Item as="a">
+          <Menu.Item>
             <Link to="/">Home</Link>
           </Menu.Item>
         </Container>
