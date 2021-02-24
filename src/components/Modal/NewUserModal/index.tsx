@@ -4,12 +4,15 @@ import { Button, Modal } from "semantic-ui-react";
 import { toast } from "react-semantic-toasts";
 
 import { UserFrom } from "../../";
+import { getData } from "../../../services/api";
 
 const NewUserModal = () => {
   const [open, setOpen] = React.useState(false);
 
   const modalFuction = () => {
     setOpen(false);
+
+    getData();
 
     toast({
       type: "success",

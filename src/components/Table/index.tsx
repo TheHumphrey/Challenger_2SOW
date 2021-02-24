@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-import { Table, Grid } from "semantic-ui-react";
+import { Table, Grid, Loader } from "semantic-ui-react";
 
 import { getData } from "../../services/api";
 
@@ -12,10 +12,17 @@ import { RootState } from "../../store/reducers/rootReducer";
 
 const TableUser = () => {
   const users = useSelector((state: RootState) => state.users);
+  const isLoading = useSelector((state: RootState) => state.isLoading);
+
+  const [isDataEmpty, setIsDataEmpty] = useState(false);
 
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    users.length === 0 ? setIsDataEmpty(true) : setIsDataEmpty(false);
+  }, [users]);
 
   return (
     <Grid textAlign="center" style={{ paddingTop: "50px" }} verticalAlign="top">
@@ -33,15 +40,22 @@ const TableUser = () => {
           </Table.Header>
 
           <Table.Body>
+            {isLoading ? (
+              <Table.Row>
+                <Table.Cell colSpan={5} textAlign="center">
+                  <Loader active inline="centered" />
+                </Table.Cell>
+              </Table.Row>
+            ) : null}
             {users &&
               users.map((user, index) => <Body user={user} key={index} />)}
-            {users && users.length === 0 && (
+            {!isLoading && isDataEmpty ? (
               <Table.Row>
                 <Table.Cell colSpan={5} textAlign="center">
                   Nenhum Usuário Encontrado!
                 </Table.Cell>
               </Table.Row>
-            )}
+            ) : null}
           </Table.Body>
         </Table>
       </Grid.Column>

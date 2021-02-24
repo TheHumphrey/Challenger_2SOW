@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { store } from "../../store";
+import { setLoading } from "../../store/reducers/isLoading/action";
 import { setUsers } from "../../store/reducers/users/action";
 import { User } from "../../types/User";
 
@@ -12,6 +13,7 @@ export const getData = () => {
     .get("/usuarios")
     .then((res: AxiosResponse<User[]>) => {
       store.dispatch(setUsers(res.data));
+      store.dispatch(setLoading(false));
     })
     .catch((err) => {
       console.warn(err);
