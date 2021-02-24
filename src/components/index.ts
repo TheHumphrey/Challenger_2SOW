@@ -4,6 +4,7 @@ import GeneralLayout from "./GeneralLayout";
 import LoginLayout from "./LoginLayout";
 import SignUp from "./SignUp";
 import UserFrom from "./UserForm";
+import UserMenu from "./UserMenu";
 
 import NewUserModal from "./Modal/NewUserModal";
 import EditUserModal from "./Modal/EditUserModal";
@@ -17,4 +18,5 @@ export {
   UserFrom,
   NewUserModal,
   EditUserModal,
+  UserMenu,
 };

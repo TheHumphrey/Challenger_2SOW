@@ -2,6 +2,8 @@ import React, { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Container, Menu, Segment } from "semantic-ui-react";
 
+import { UserMenu } from "../";
+
 interface Props {
   children: ReactNode;
 }
@@ -15,6 +17,9 @@ const FixedMenuLayout = ({ children }: Props) => (
         </Menu.Item>
         <Menu.Item>
           <Link to="/login">Login</Link>
+        </Menu.Item>
+        <Menu.Item position="right">
+          <UserMenu />
         </Menu.Item>
       </Container>
     </Menu>
