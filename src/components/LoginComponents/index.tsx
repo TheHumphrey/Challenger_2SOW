@@ -25,8 +25,18 @@ const LoginComponent = (): ReactElement => {
     password.length < 4 ? setIsPassword(true) : setIsPassword(false);
   };
 
+  const createToken = () => {
+    localStorage.setItem(
+      "auth",
+      JSON.stringify({
+        token: "Ola Eu Sou Um Token :)",
+        refreshToken: "Ola eu sou um refreshToken :)",
+      })
+    );
+  };
+
   const handleSubmit = () => {
-    !isEmail && !isPassword && history.push("/");
+    !isEmail && !isPassword && createToken() && history.push("/");
   };
 
   return (

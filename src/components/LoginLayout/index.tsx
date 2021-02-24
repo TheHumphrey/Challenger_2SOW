@@ -1,4 +1,5 @@
 import React, { ReactElement, ReactNode } from "react";
+import { Link } from "react-router-dom";
 import { Container, Menu, Segment } from "semantic-ui-react";
 
 interface Props {
@@ -19,7 +20,9 @@ const LoginLayout = ({ children }: Props): ReactElement => {
           <Menu.Item as="a" header>
             Project Name
           </Menu.Item>
-          <Menu.Item as="a">Home</Menu.Item>
+          <Menu.Item as="a">
+            <Link to="/">Home</Link>
+          </Menu.Item>
         </Container>
       </Menu>
 

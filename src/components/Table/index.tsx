@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 
-import { Table } from "semantic-ui-react";
+import { Table, Grid, Button } from "semantic-ui-react";
 import { User } from "../../types/User";
 
 import api from "../../services/api";
@@ -42,21 +42,33 @@ const TableUser = () => {
   }, []);
 
   return (
-    <Table singleLine>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell>Nome</Table.HeaderCell>
-          <Table.HeaderCell>CPF</Table.HeaderCell>
-          <Table.HeaderCell>Email</Table.HeaderCell>
-          <Table.HeaderCell>Cidade</Table.HeaderCell>
-          <Table.HeaderCell></Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
+    <Grid textAlign="center" style={{ paddingTop: "50px" }} verticalAlign="top">
+      <Grid.Column>
+        <Button color="green">Add New User</Button>
+        <Table singleLine>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>CPF</Table.HeaderCell>
+              <Table.HeaderCell>Email</Table.HeaderCell>
+              <Table.HeaderCell>City</Table.HeaderCell>
+              <Table.HeaderCell></Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
 
-      <Table.Body>
-        {users && users.map((user) => <Body user={user} />)}
-      </Table.Body>
-    </Table>
+          <Table.Body>
+            {users && users.map((user) => <Body user={user} />)}
+            {users && users.length === 0 && (
+              <Table.Row>
+                <Table.Cell colSpan={5} textAlign="center">
+                  Nenhum Usuário Encontrado!
+                </Table.Cell>
+              </Table.Row>
+            )}
+          </Table.Body>
+        </Table>
+      </Grid.Column>
+    </Grid>
   );
 };
 

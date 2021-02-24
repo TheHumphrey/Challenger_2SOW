@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import { Link } from "react-router-dom";
 import { Container, Menu, Segment } from "semantic-ui-react";
 
 interface Props {
@@ -12,19 +13,18 @@ const FixedMenuLayout = ({ children }: Props) => (
         <Menu.Item as="a" header>
           Project Name
         </Menu.Item>
+        <Menu.Item as="a">
+          <Link to="/login">Login</Link>
+        </Menu.Item>
       </Container>
     </Menu>
 
-    <Container text style={{ marginTop: "7em" }}>
+    <Container text style={{ height: "95.2vh" }}>
       {children}
     </Container>
 
-    <Segment
-      inverted
-      vertical
-      style={{ margin: "5em 0em 0em", padding: "5em 0em" }}
-    >
-      <Container textAlign="center"></Container>
+    <Segment inverted vertical>
+      <Container textAlign="center">© 2021 TheHumphrey, Inc.</Container>
     </Segment>
   </div>
 );

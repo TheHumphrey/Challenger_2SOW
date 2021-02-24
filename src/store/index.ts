@@ -6,6 +6,7 @@ import rootReducer from "./reducers/rootReducer";
 
 export type ApplicationState = {
   user: User[];
+  isAuth: boolean;
 };
 
 const store: Store<ApplicationState> = createStore(rootReducer);
