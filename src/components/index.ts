@@ -6,6 +6,7 @@ import SignUp from "./SignUp";
 import UserFrom from "./UserForm";
 
 import NewUserModal from "./Modal/NewUserModal";
+import EditUserModal from "./Modal/EditUserModal";
 
 export {
   LoginComponent,
@@ -15,4 +16,5 @@ export {
   SignUp,
   UserFrom,
   NewUserModal,
+  EditUserModal,
 };

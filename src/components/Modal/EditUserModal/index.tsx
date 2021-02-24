@@ -4,8 +4,13 @@ import { Button, Modal } from "semantic-ui-react";
 import { toast } from "react-semantic-toasts";
 
 import { UserFrom } from "../../";
+import { User } from "../../../types/User";
 
-const NewUserModal = () => {
+interface Props {
+  user: User;
+}
+
+const NewUserModal = ({ user }: Props) => {
   const [open, setOpen] = React.useState(false);
 
   const modalFuction = () => {
@@ -14,8 +19,8 @@ const NewUserModal = () => {
     toast({
       type: "success",
       icon: "envelope",
-      title: "User Created",
-      description: "User create with success!",
+      title: "User Update",
+      description: "User update with success!",
       animation: "drop",
       time: 3000,
     });
@@ -26,11 +31,11 @@ const NewUserModal = () => {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<Button color="green">Create New User</Button>}
+      trigger={<Button color="blue">Edit</Button>}
     >
-      <Modal.Header>Create New User</Modal.Header>
+      <Modal.Header>Edit User</Modal.Header>
       <Modal.Content>
-        <UserFrom callback={modalFuction} type="create" />
+        <UserFrom callback={modalFuction} type="edit" user={user} />
       </Modal.Content>
     </Modal>
   );

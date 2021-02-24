@@ -3,20 +3,25 @@ import React, { ReactElement, useEffect, useState } from "react";
 
 import axios from "axios";
 
-import { useHistory } from "react-router-dom";
-
-import api from "../../services/api";
+import api, { getData } from "../../services/api";
 
 import { Button, Form, Input, Segment } from "semantic-ui-react";
 
 import { User } from "../../types/User";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/reducers/rootReducer";
+import { setUsers } from "../../store/reducers/users/action";
 
 interface Props {
   callback(): void;
+  type: "create" | "edit";
+  user?: User;
 }
 
-const UserForm = ({ callback }: Props): ReactElement => {
-  const history = useHistory();
+const UserForm = ({ callback, type, user }: Props): ReactElement => {
+  const users = useSelector((state: RootState) => state.users);
+  const dispatch = useDispatch();
+
   const [isEmail, setIsEmail] = useState<boolean>(false);
   const [isCpf, setIsCpf] = useState<boolean>(false);
   const [isCep, setIsCep] = useState<boolean>(false);
@@ -31,8 +36,23 @@ const UserForm = ({ callback }: Props): ReactElement => {
   const [city, setCity] = useState<string>("");
 
   useEffect(() => {
+    user && updateState(user);
+  }, []);
+
+  useEffect(() => {
     validateAll();
   }, [email, name, cpf, cep]);
+
+  const updateState = (item: User) => {
+    setEmail(item.email);
+    setName(item.nome);
+    setCpf(item.cpf);
+    setCep(item.endereco.cep);
+    setStreet(item.endereco.rua);
+    setNumber(item.endereco.numero);
+    setDistrict(item.endereco.bairro);
+    setCity(item.endereco.cidade);
+  };
 
   const validateAll = (): void => {
     email && setIsEmail(validateEmail());
@@ -101,23 +121,46 @@ const UserForm = ({ callback }: Props): ReactElement => {
   };
 
   const handleSubmit = async (): Promise<void> => {
-    const data: User = {
-      email: email,
-      nome: name,
-      cpf: cpf,
-      endereco: {
-        bairro: district,
-        cep: cep,
-        cidade: city,
-        numero: Number(number) || 0,
-        rua: street,
-      },
-    };
-    if (!isEmail && !isCep && !isCpf) {
-      await api.post("/usuarios", data);
+    if (type === "create") {
+      const data: User = {
+        email: email,
+        nome: name,
+        cpf: cpf,
+        endereco: {
+          bairro: district,
+          cep: cep,
+          cidade: city,
+          numero: Number(number) || 0,
+          rua: street,
+        },
+      };
+      if (!isEmail && !isCep && !isCpf) {
+        await api.post("/usuarios", data);
+        callback();
+      } else {
+        console.warn("fail");
+      }
+    } else if (type === "edit" && user) {
+      const data: User = {
+        email: email,
+        nome: name,
+        cpf: cpf,
+        endereco: {
+          bairro: district,
+          cep: cep,
+          cidade: city,
+          numero: Number(number) || 0,
+          rua: street,
+        },
+      };
+
+      await api.put(`/usuarios/${user.id}`, data).then((res) => {
+        const newUsers = users.map((item) =>
+          item.id === user.id ? data : item
+        );
+        dispatch(setUsers(newUsers));
+      });
       callback();
-    } else {
-      console.warn("fail");
     }
   };
 
@@ -132,6 +175,7 @@ const UserForm = ({ callback }: Props): ReactElement => {
           placeholder="E-mail address"
           control={Input}
           error={isEmail}
+          value={email}
           type="email"
           onChange={(e: any) => setEmail(e.target.value)}
           required
@@ -143,6 +187,7 @@ const UserForm = ({ callback }: Props): ReactElement => {
           iconPosition="left"
           placeholder="Name"
           control={Input}
+          value={name}
           type="text"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setName(e.target.value)

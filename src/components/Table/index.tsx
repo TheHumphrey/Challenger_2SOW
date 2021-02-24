@@ -1,33 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 
-import { Table, Grid, Button } from "semantic-ui-react";
+import { Table, Grid } from "semantic-ui-react";
 
-import { User } from "../../types/User";
-
-import api from "../../services/api";
+import { getData } from "../../services/api";
 
 import Body from "./Body";
 import { NewUserModal } from "../";
-import { AxiosResponse } from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { setUsers } from "../../store/reducers/users/action";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store/reducers/rootReducer";
 
 const TableUser = () => {
   const users = useSelector((state: RootState) => state.users);
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    api
-      .get("/usuarios")
-      .then((res: AxiosResponse<User[]>) => {
-        console.log(res.data);
-        dispatch(setUsers(res.data));
-      })
-      .catch((err) => {
-        console.warn(err);
-      });
+    getData();
   }, []);
 
   return (
@@ -46,7 +33,8 @@ const TableUser = () => {
           </Table.Header>
 
           <Table.Body>
-            {users && users.map((user) => <Body user={user} />)}
+            {users &&
+              users.map((user, index) => <Body user={user} key={index} />)}
             {users && users.length === 0 && (
               <Table.Row>
                 <Table.Cell colSpan={5} textAlign="center">
