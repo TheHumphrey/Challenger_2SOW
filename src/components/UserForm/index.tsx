@@ -3,7 +3,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 
 import axios from "axios";
 
-import api, { getData } from "../../services/api";
+import api from "../../services/api";
 
 import { Button, Form, Input, Segment } from "semantic-ui-react";
 
@@ -133,6 +133,7 @@ const UserForm = ({ callback, type, user }: Props): ReactElement => {
           numero: Number(number) || 0,
           rua: street,
         },
+        status: "on",
       };
       if (!isEmail && !isCep && !isCpf) {
         await api.post("/usuarios", data);
@@ -152,6 +153,7 @@ const UserForm = ({ callback, type, user }: Props): ReactElement => {
           numero: Number(number) || 0,
           rua: street,
         },
+        status: "on",
       };
 
       await api.put(`/usuarios/${user.id}`, data).then((res) => {

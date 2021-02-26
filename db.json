@@ -2,8 +2,8 @@
   "usuarios": [
     {
       "email": "teste@gmail.com",
-      "nome": "newTest",
-      "cpf": "123.123.453-21",
+      "nome": "teste",
+      "cpf": "111.111.111-11",
       "endereco": {
         "bairro": "Jardim Scala",
         "cep": "75382-410",
@@ -11,24 +11,26 @@
         "numero": 2,
         "rua": "Avenida Padre Neves"
       },
+      "status": "on",
+      "id": 1
+    },
+    {
+      "email": "teste@gmail.com",
+      "nome": "teste",
+      "cpf": "111.111.111-11",
+      "endereco": {
+        "bairro": "Jardim Scala",
+        "cep": "75382-410",
+        "cidade": "Trindade",
+        "numero": 2,
+        "rua": "Avenida Padre Neves"
+      },
+      "status": "on",
       "id": 2
     },
     {
-      "email": "111@gmail.com",
-      "nome": "ultimoteste",
-      "cpf": "111.111.111-11",
-      "endereco": {
-        "bairro": "Jardim Scala",
-        "cep": "75382-410",
-        "cidade": "Trindade",
-        "numero": 5,
-        "rua": "Avenida Padre Neves"
-      },
-      "id": 3
-    },
-    {
-      "email": "safd@gmail.com",
-      "nome": "fdsafa",
+      "email": "teste@gmail.com",
+      "nome": "teste",
       "cpf": "111.111.111-11",
       "endereco": {
         "bairro": "Jardim Scala",
@@ -37,7 +39,78 @@
         "numero": 2,
         "rua": "Avenida Padre Neves"
       },
+      "status": "on",
+      "id": 3
+    },
+    {
+      "email": "fer@gmail.com",
+      "nome": "teste",
+      "cpf": "111.111.111-11",
+      "endereco": {
+        "bairro": "Jardim Scala",
+        "cep": "75382-410",
+        "cidade": "Trindade",
+        "numero": 2,
+        "rua": "Avenida Padre Neves"
+      },
+      "status": "on",
       "id": 4
+    },
+    {
+      "email": "fer@gmail.com",
+      "nome": "teste",
+      "cpf": "111.111.111-11",
+      "endereco": {
+        "bairro": "Jardim Scala",
+        "cep": "75382-410",
+        "cidade": "Trindade",
+        "numero": 2,
+        "rua": "Avenida Padre Neves"
+      },
+      "status": "on",
+      "id": 5
+    },
+    {
+      "email": "fer@gmail.com",
+      "nome": "teste",
+      "cpf": "111.111.111-11",
+      "endereco": {
+        "bairro": "Jardim Scala",
+        "cep": "75382-410",
+        "cidade": "Trindade",
+        "numero": 2,
+        "rua": "Avenida Padre Neves"
+      },
+      "status": "on",
+      "id": 6
+    },
+    {
+      "email": "teste@gmail.com",
+      "nome": "fernando",
+      "cpf": "111.111.111-11",
+      "endereco": {
+        "bairro": "Jardim Scala",
+        "cep": "75382-410",
+        "cidade": "Trindade",
+        "numero": 3,
+        "rua": "Avenida Padre Neves"
+      },
+      "status": "on",
+      "id": 7
+    },
+    {
+      "email": "111@gmail.com",
+      "nome": "myname",
+      "cpf": "111.111.111-11",
+      "endereco": {
+        "bairro": "Setor Central",
+        "cep": "74015-005",
+        "cidade": "Goiânia",
+        "numero": 3,
+        "rua": "Avenida Tocantins"
+      },
+      "status": "on",
+      "id": 8
     }
   ]
 }

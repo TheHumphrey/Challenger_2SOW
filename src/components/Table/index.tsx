@@ -1,42 +1,51 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 
-import { Table, Grid, Loader } from "semantic-ui-react";
+import { Table, Grid, Loader, Input } from "semantic-ui-react";
 
 import { getData } from "../../services/api";
 
 import Body from "./Body";
+import Header from "./Header";
+
 import { NewUserModal } from "../";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/reducers/rootReducer";
+
+import { OptionsTableStyle } from "./style";
 
 const TableUser = () => {
   const users = useSelector((state: RootState) => state.users);
   const isLoading = useSelector((state: RootState) => state.isLoading);
 
   const [isDataEmpty, setIsDataEmpty] = useState(false);
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     getData();
   }, []);
 
   useEffect(() => {
-    users.length === 0 ? setIsDataEmpty(true) : setIsDataEmpty(false);
+    users.filter((user) => user.status.toLocaleLowerCase().includes("on"))
+      .length === 0
+      ? setIsDataEmpty(true)
+      : setIsDataEmpty(false);
   }, [users]);
 
   return (
     <Grid textAlign="center" style={{ paddingTop: "50px" }} verticalAlign="top">
       <Grid.Column>
-        <NewUserModal />
+        <OptionsTableStyle>
+          <NewUserModal />
+          <Input
+            icon="search"
+            placeholder="Search..."
+            onChange={(e) => setFilter(e.target.value)}
+          />
+        </OptionsTableStyle>
         <Table singleLine>
           <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Name</Table.HeaderCell>
-              <Table.HeaderCell>CPF</Table.HeaderCell>
-              <Table.HeaderCell>Email</Table.HeaderCell>
-              <Table.HeaderCell>City</Table.HeaderCell>
-              <Table.HeaderCell></Table.HeaderCell>
-            </Table.Row>
+            <Header />
           </Table.Header>
 
           <Table.Body>
@@ -48,7 +57,19 @@ const TableUser = () => {
               </Table.Row>
             ) : null}
             {users &&
-              users.map((user, index) => <Body user={user} key={index} />)}
+              !isLoading &&
+              users
+                .filter(
+                  (user) =>
+                    (user.status.toLowerCase().includes("on") &&
+                      user.nome.toLowerCase().includes(filter.toLowerCase())) ||
+                    user.email.toLowerCase().includes(filter.toLowerCase()) ||
+                    user.cpf.toLowerCase().includes(filter.toLowerCase()) ||
+                    user.endereco.cidade
+                      .toLowerCase()
+                      .includes(filter.toLowerCase())
+                )
+                .map((user, index) => <Body user={user} key={index} />)}
             {!isLoading && isDataEmpty ? (
               <Table.Row>
                 <Table.Cell colSpan={5} textAlign="center">

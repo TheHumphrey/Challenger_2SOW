@@ -10,4 +10,5 @@ export type User = {
     cidade: string;
   };
   id?: number;
+  status: string;
 };
