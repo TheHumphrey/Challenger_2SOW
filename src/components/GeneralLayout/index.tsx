@@ -9,7 +9,7 @@ interface Props {
 }
 
 const FixedMenuLayout = ({ children }: Props) => (
-  <div>
+  <div style={{ position: "relative", height: "100%" }}>
     <Menu fixed="top" inverted>
       <Container>
         <Menu.Item as="a" header>
@@ -24,12 +24,14 @@ const FixedMenuLayout = ({ children }: Props) => (
       </Container>
     </Menu>
 
-    <Container text style={{ height: "96.6vh" }}>
+    <Container text style={{ minHeight: "100%" }}>
       {children}
     </Container>
 
-    <Segment inverted vertical>
-      <Container textAlign="center">© 2021 TheHumphrey, Inc.</Container>
+    <Segment inverted>
+      <Container textAlign="center">
+        <Container textAlign="center">© 2021 TheHumphrey, Inc.</Container>
+      </Container>
     </Segment>
   </div>
 );

@@ -3,11 +3,9 @@ import React, { ReactElement } from "react";
 import { Table, GeneralLayout } from "../../components";
 
 const Home = (): ReactElement => (
-  <div>
-    <GeneralLayout>
-      <Table />
-    </GeneralLayout>
-  </div>
+  <GeneralLayout>
+    <Table />
+  </GeneralLayout>
 );
 
 export default Home;

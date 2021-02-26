@@ -6,6 +6,7 @@ export default createGlobalStyle`
   }
   html, body {
     height: 100%;
+    width: 100%;
   }
   body {
     margin: 0;
@@ -14,5 +15,10 @@ export default createGlobalStyle`
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     font-weight: normal;
     user-select: none;
+  }
+
+  #root{
+    height: 100%;
+    width: 100%;
   }
 `;

@@ -14,3 +14,9 @@ export const OptionsTableStyle = styled.div`
     margin-top: 5px;
   }
 `;
+
+export const TdFooter = styled.th`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

@@ -1,7 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 
-import { Table, Grid, Loader, Input } from "semantic-ui-react";
+import {
+  Table,
+  Grid,
+  Loader,
+  Input,
+  Pagination,
+  Menu,
+  PaginationProps,
+} from "semantic-ui-react";
 
 import { getData } from "../../services/api";
 
@@ -12,7 +20,7 @@ import { NewUserModal } from "../";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/reducers/rootReducer";
 
-import { OptionsTableStyle } from "./style";
+import { OptionsTableStyle, TdFooter } from "./style";
 
 const TableUser = () => {
   const users = useSelector((state: RootState) => state.users);
@@ -32,6 +40,10 @@ const TableUser = () => {
       : setIsDataEmpty(false);
   }, [users]);
 
+  const pageChange = (data: PaginationProps) => {
+    console.log(data.activePage);
+  };
+
   return (
     <Grid textAlign="center" style={{ paddingTop: "50px" }} verticalAlign="top">
       <Grid.Column>
@@ -43,7 +55,7 @@ const TableUser = () => {
             onChange={(e) => setFilter(e.target.value)}
           />
         </OptionsTableStyle>
-        <Table singleLine>
+        <Table style={{ height: "100%" }}>
           <Table.Header>
             <Header />
           </Table.Header>
@@ -78,6 +90,17 @@ const TableUser = () => {
               </Table.Row>
             ) : null}
           </Table.Body>
+          <Table.Footer>
+            <Table.Row>
+              <Table.HeaderCell colSpan="5" textAlign="center">
+                <Pagination
+                  defaultActivePage={1}
+                  totalPages={3}
+                  onPageChange={(e, data) => pageChange(data)}
+                />
+              </Table.HeaderCell>
+            </Table.Row>
+          </Table.Footer>
         </Table>
       </Grid.Column>
     </Grid>
