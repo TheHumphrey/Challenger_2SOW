@@ -12,7 +12,7 @@ const NewUserModal = () => {
   const modalFuction = () => {
     setOpen(false);
 
-    getData();
+    getData(1);
 
     toast({
       type: "success",

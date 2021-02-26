@@ -8,9 +8,15 @@ const api = axios.create({
   baseURL: "http://localhost:5000",
 });
 
-export const getData = () => {
+export const getData = (pag: number) => {
+  let currentPage: number;
+  if (pag === 1) {
+    currentPage = 0;
+  } else {
+    currentPage = pag * 10 - 10;
+  }
   api
-    .get("/usuarios")
+    .get(`/usuarios?_start=${currentPage}&_limit=10`)
     .then((res: AxiosResponse<User[]>) => {
       store.dispatch(setUsers(res.data));
       store.dispatch(setLoading(false));
@@ -19,5 +25,4 @@ export const getData = () => {
       console.warn(err);
     });
 };
-
 export default api;

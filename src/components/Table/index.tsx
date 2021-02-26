@@ -1,17 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 
-import {
-  Table,
-  Grid,
-  Loader,
-  Input,
-  Pagination,
-  Menu,
-  PaginationProps,
-} from "semantic-ui-react";
+import { Table, Grid, Loader, Input, Pagination } from "semantic-ui-react";
 
-import { getData } from "../../services/api";
+import api, { getData } from "../../services/api";
 
 import Body from "./Body";
 import Header from "./Header";
@@ -20,17 +12,21 @@ import { NewUserModal } from "../";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/reducers/rootReducer";
 
-import { OptionsTableStyle, TdFooter } from "./style";
+import { OptionsTableStyle } from "./style";
+import { AxiosResponse } from "axios";
+import { User } from "../../types/User";
 
 const TableUser = () => {
   const users = useSelector((state: RootState) => state.users);
   const isLoading = useSelector((state: RootState) => state.isLoading);
 
   const [isDataEmpty, setIsDataEmpty] = useState(false);
+  const [pag, setPag] = useState(1);
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
-    getData();
+    getData(1);
+    updatePagination();
   }, []);
 
   useEffect(() => {
@@ -38,10 +34,31 @@ const TableUser = () => {
       .length === 0
       ? setIsDataEmpty(true)
       : setIsDataEmpty(false);
+
+    updatePagination();
   }, [users]);
 
-  const pageChange = (data: PaginationProps) => {
-    console.log(data.activePage);
+  const updatePagination = () => {
+    api
+      .get(`/usuarios`)
+      .then((res: AxiosResponse<User[]>) => {
+        setPag(
+          Math.ceil(
+            (res.data.filter((user) =>
+              user.status.toLocaleLowerCase().includes("on")
+            ).length +
+              1) /
+              10
+          )
+        );
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+  };
+
+  const pageChange = (n: any) => {
+    getData(n);
   };
 
   return (
@@ -95,8 +112,8 @@ const TableUser = () => {
               <Table.HeaderCell colSpan="5" textAlign="center">
                 <Pagination
                   defaultActivePage={1}
-                  totalPages={3}
-                  onPageChange={(e, data) => pageChange(data)}
+                  totalPages={pag}
+                  onPageChange={(e, data) => pageChange(data.activePage)}
                 />
               </Table.HeaderCell>
             </Table.Row>
