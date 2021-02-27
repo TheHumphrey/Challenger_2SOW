@@ -26,7 +26,9 @@ const LoginLayout = ({ children }: Props): ReactElement => {
         </Container>
       </Menu>
 
-      <Container text>{children}</Container>
+      <Container text style={{ minHeight: "100%" }}>
+        {children}
+      </Container>
 
       <Segment vertical>
         <Container textAlign="center">© 2021 TheHumphrey, Inc.</Container>
