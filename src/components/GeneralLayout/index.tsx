@@ -13,7 +13,7 @@ const FixedMenuLayout = ({ children }: Props) => (
     <Menu fixed="top" inverted>
       <Container>
         <Menu.Item as="a" header>
-          Project Name
+          2sow-eu-o-escolhido
         </Menu.Item>
         <Menu.Item>
           <Link to="/login">Login</Link>

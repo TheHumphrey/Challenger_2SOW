@@ -18,7 +18,7 @@ const LoginLayout = ({ children }: Props): ReactElement => {
       <Menu fixed="top" style={fixedMenuStyle}>
         <Container text>
           <Menu.Item as="a" header>
-            Project Name
+            2sow-eu-o-escolhido
           </Menu.Item>
           <Menu.Item>
             <Link to="/">Home</Link>
