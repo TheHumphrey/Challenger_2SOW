@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Dropdown } from "semantic-ui-react";
+import { persistor } from "../../store";
 import { setAuth } from "../../store/reducers/isAuth/action";
 
 const UserMenu = () => {
@@ -8,6 +9,7 @@ const UserMenu = () => {
 
   const logOut = () => {
     dispatch(setAuth(false));
+    persistor.purge();
   };
 
   return (

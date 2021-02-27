@@ -9,22 +9,26 @@ import Body from "./Body";
 import Header from "./Header";
 
 import { NewUserModal } from "../";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/reducers/rootReducer";
 
 import { OptionsTableStyle } from "./style";
 import { AxiosResponse } from "axios";
 import { User } from "../../types/User";
+import { setLoading } from "../../store/reducers/isLoading/action";
 
 const TableUser = () => {
   const users = useSelector((state: RootState) => state.users);
   const isLoading = useSelector((state: RootState) => state.isLoading);
+
+  const dispatch = useDispatch();
 
   const [isDataEmpty, setIsDataEmpty] = useState(false);
   const [pag, setPag] = useState(1);
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
+    dispatch(setLoading(true));
     getData(1);
     updatePagination();
   }, []);

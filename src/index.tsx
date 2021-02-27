@@ -1,12 +1,13 @@
 import React, { ReactElement } from "react";
 import ReactDOM from "react-dom";
+import { PersistGate } from "redux-persist/integration/react";
 
 import { ThemeProvider } from "styled-components";
 import { Provider } from "react-redux";
 
 import { SemanticToastContainer } from "react-semantic-toasts";
 
-import { store } from "./store";
+import { persistor, store } from "./store";
 
 import Routes from "./routes";
 
@@ -19,9 +20,11 @@ import "react-semantic-toasts/styles/react-semantic-alert.css";
 const App = (): ReactElement => (
   <ThemeProvider theme={light}>
     <Provider store={store}>
-      <SemanticToastContainer />
-      <GlobalStyle />
-      <Routes />
+      <PersistGate loading={null} persistor={persistor}>
+        <SemanticToastContainer />
+        <GlobalStyle />
+        <Routes />
+      </PersistGate>
     </Provider>
   </ThemeProvider>
 );
